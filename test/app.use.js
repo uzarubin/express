@@ -103,19 +103,17 @@ describe('app', function(){
         res.end('success');
       });
       
-      // var other = express();
-      // 
-      // other.use(function(req, res, next) {
-      //   next();
-      // });
-      // 
-      // other.get('/', function(req, res, next) {
-      //   next();
-      // });
+      var other = express();
 
-      // app.use('/post/:article', fn1, other, fn2, blog);
-      
-      app.use('/post/:article', fn1, fn2, blog);
+      other.use(function(req, res, next) {
+        next();
+      });
+
+      other.get('/', function(req, res, next) {
+        next();
+      });
+
+      app.use('/post/:article', fn1, other, fn2, blog);
 
       request(app)
       .get('/post/once-upon-a-time')
